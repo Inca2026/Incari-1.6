@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loading...</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="status">Loading project (138 MB), please wait...</div>
+
+  <script>
+    const releaseUrl = "YOUR_RELEASE_LINK_HERE";
+    const proxyUrl = "https://corsproxy.io?" + encodeURIComponent(releaseUrl);
+
+    fetch(proxyUrl)
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to download file");
+        return response.text();
+      })
+      .then(html => {
+        document.open();
+        document.write(html);
+        document.close();
+      })
+      .catch(error => {
+        document.getElementById("status").innerText = "Error loading file: " + error.message;
+      });
+  </script>
+</body>
+</html>
